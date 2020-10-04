@@ -8,12 +8,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-//DB¿Í ¿¬°áÇÏ´Â Å¬·¡½º
+//DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 public class DBConnection {
 	public static Connection getConnection() throws SQLException, NamingException,
 	ClassNotFoundException{
 		Context context = new InitialContext();
-		DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/Oracle18c");
+		DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/Oracle11g");
 		Connection conn = ds.getConnection();
 		return conn;
 	}

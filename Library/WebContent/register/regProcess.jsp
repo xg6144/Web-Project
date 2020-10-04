@@ -1,16 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <%@ page import = "user.dao.UserDAO" %>
     <%@ page import = "java.sql.Timestamp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<%
-		request.setCharacterEncoding("EUC-KR");
+		request.setCharacterEncoding("UTF-8");
 	%>
 	<%
 		String id = request.getParameter("id");
@@ -26,14 +26,14 @@
 		{	
 	%>
 	<script type="text/javascript">
-		alert("È¸¿ø°¡ÀÔ¿¡ ¼º°øÇß½À´Ï´Ù.");
-		location.href="loginForm.jsp";
+		alert("íšŒì›ê°€ì…ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
+		location.href="../login/loginForm.jsp";
 	</script>
 	<%
 		}else if(result == UserDAO.INSERT_FAIL){
 	%>
 	<script type="text/javascript">
-		alert("ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµğ ÀÔ´Ï´Ù.");
+		alert("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì•„ì´ë”” ì…ë‹ˆë‹¤.");
 		location.href="../register/regForm.jsp";
 	</script>
 	<%

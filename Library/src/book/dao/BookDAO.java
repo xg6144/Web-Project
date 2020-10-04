@@ -3,6 +3,7 @@ package book.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -147,6 +148,46 @@ public class BookDAO {
 				e.printStackTrace();
 			}
 		}
+		return vos;
+	}
+	
+	public ArrayList<BookVO> borrowList() {
+		ArrayList<BookVO> vos = new ArrayList<BookVO>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from book";
+		
+		try {
+			conn = DBConnection.getConnection();
+			stmt = conn.createStatement();
+			
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				String bookId = rs.getString("book_id");
+				String bookName = rs.getString("book_name");
+				String bookWriter = rs.getString("book_writer");
+				String bookPub = rs.getString("book_pub");
+				String bookGe = rs.getString("book_ge");
+				
+				BookVO vo = new BookVO(bookId, bookName, bookWriter, bookPub, bookGe);
+				vos.add(vo);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn!=null) conn.close();
+				if(stmt!=null) stmt.close();
+				if(rs!=null) rs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return vos;
 	}
 }
