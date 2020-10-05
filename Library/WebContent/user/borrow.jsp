@@ -32,26 +32,31 @@
 			BookVO vos = vo.get(i);
 			
 			String bookId = vos.getBookId();
+			session.setAttribute("bookId", bookId);
 		%><tr>
 		<td><%=bookId%></td>
 		<%
 			String bookName = vos.getBookName();
+			session.setAttribute("bookName", bookName);
 		%>
 		<td><%=bookName %></td>
 		<%
 			String bookWriter = vos.getBookWriter();
+			session.setAttribute("bookWriter", bookWriter);
 		%>
 		<td><%=bookWriter %></td>
 		<%
 			String bookPub = vos.getBookPub();
+			session.setAttribute("bookPub", bookPub);
 		%>
 		<td><%=bookPub %></td>
 		<%
 			String bookGe = vos.getBookGe();
+			session.setAttribute("bookGe", bookGe);
 		%>
 		<td><%=bookGe %></td>
 		<td>
-		 <a href="./borrowProcess.jsp">대여</a>
+		 <a href="borrowProcess.jsp">대여신청</a>
 		<%
 		}
 		%>

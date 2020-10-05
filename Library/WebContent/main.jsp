@@ -24,7 +24,9 @@
 	%>
 	<h3><%=name %>님 환영합니다.</h3>
 	<a href="./admin/bookInsert.jsp">도서추가</a>
-	<a href="./admin/userSearch.jsp">회원목록</a> 
+	<a href="./admin/userSearch.jsp">회원목록</a>
+	<a href="./admin/userRentList.jsp">대여신청리스트</a>
+	<a href="./admin/rent.jsp">대여승인</a>
 	<a href="./login/logout.jsp">로그아웃</a>
 	
 	<%
