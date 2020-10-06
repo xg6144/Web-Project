@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "book.vo.BookVO" %>
 <%@ page import = "rent.dao.RentDAO" %>
+<%@ page import = "java.sql.Timestamp" %>
 <%
 	request.setCharacterEncoding("utf-8");
 %>
@@ -11,13 +12,14 @@
 	String bookPub = (String)session.getAttribute("bookPub");
 	String bookGe = (String)session.getAttribute("bookGe");
 	String userName = (String)session.getAttribute("name");
+	Timestamp rentDate = (Timestamp)session.getAttribute("rentDate");
 	
 	BookVO vo = new BookVO(bookName, bookWriter, bookPub, bookGe);
 	
 	RentDAO dao = RentDAO.getInstance();	
 	
-	int result = 0;
-	result = dao.rentListInsert(bookName, bookWriter, bookPub, bookGe, userName);
+	int result = 0; 
+	result = dao.rentListInsert(bookName, bookWriter, bookPub, bookGe, userName, rentDate);
 	
 	if(result == RentDAO.INSERT_SUCC){
 %>

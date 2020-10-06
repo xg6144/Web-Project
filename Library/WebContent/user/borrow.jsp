@@ -3,6 +3,7 @@
 <%@ page import = "book.dao.BookDAO" %>
 <%@ page import = "book.vo.BookVO" %>
 <%@ page import = "java.util.ArrayList" %>
+<%@ page import = "java.sql.Timestamp" %>
 <%
 	BookDAO dao = BookDAO.getInstance();
 	ArrayList<BookVO> vo = dao.borrowList();
@@ -56,6 +57,10 @@
 		%>
 		<td><%=bookGe %></td>
 		<td>
+		<% 
+			Timestamp rentDate = new Timestamp(System.currentTimeMillis());
+			session.setAttribute("rentDate", rentDate);
+		%>
 		 <a href="borrowProcess.jsp">대여신청</a>
 		<%
 		}
