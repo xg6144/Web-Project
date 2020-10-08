@@ -39,10 +39,10 @@
 			
 			if(uvo == null){
 	%>
-		<script type = "text/javascript">
-			alert("존재하지 않는 회원.");
-			history.go(-1);
-		</script>
+			<script type = "text/javascript">
+				alert("존재하지 않는 회원.");
+				history.go(-1);
+			</script>
 	<%
 			}else{
 				String name = uvo.getName();

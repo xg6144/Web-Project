@@ -3,13 +3,16 @@ package user.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import lib.dbconn.DBConnection;
 import user.vo.UserVO;
 
 public class UserDAO {
 	private static UserDAO instance;
+	
 	public static final int INSERT_SUCCESS = 1;
 	public static final int INSERT_FAIL = 0;
 	public static final int LOGIN_SUCCESS = 1;
@@ -142,5 +145,43 @@ public class UserDAO {
 			}
 		}
 		return vo;
+	}
+	
+	public ArrayList<UserVO> getUserList() {
+		ArrayList<UserVO> vos = new ArrayList<UserVO>();
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select * from users";
+		
+		try {
+			conn = DBConnection.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				String userId = rs.getString("user_id");
+				String userPw = rs.getString("user_pw");
+				String userName = rs.getString("user_name");
+				Timestamp regDate = rs.getTimestamp("user_reg");
+				String userEmail = rs.getString("user_email");
+				
+				UserVO vo = new UserVO(userId, userPw, userName, userEmail, regDate);
+				vos.add(vo);
+			} 
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn!=null) conn.close();
+				if(stmt!=null) stmt.close();
+				if(rs!=null) rs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return vos;
 	}
 }

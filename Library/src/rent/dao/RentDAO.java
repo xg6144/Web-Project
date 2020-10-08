@@ -98,6 +98,7 @@ public class RentDAO {
 		ResultSet rs = null;
 		RentVO vo = null;
 		String sql = "select * from rentlist";
+		
 		try {
 			conn = DBConnection.getConnection();
 			stmt = conn.createStatement();

@@ -8,6 +8,20 @@ public class UserVO {
 	private String name;
 	private Timestamp regDate;
 	private String email;
+	
+	public UserVO()
+	{
+		
+	}
+	
+	public UserVO(String userId, String userPw, String userName, String userEmail, Timestamp regDate)
+	{
+		this.id = userId;
+		this.pw = userPw;
+		this.name = userName;
+		this.email = userEmail;
+		this.regDate = regDate;
+	}
 	public String getId() {
 		return id;
 	}
