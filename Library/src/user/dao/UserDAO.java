@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import lib.dbconn.DBConnection;
 import user.vo.UserVO;
@@ -183,5 +184,59 @@ public class UserDAO {
 			}
 		}
 		return vos;
+	}
+	public ArrayList<UserVO> listUsers(UserVO userVO)
+	{
+		ArrayList<UserVO> userList = new ArrayList<UserVO>();
+		String _name = userVO.getName();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from users";
+		try {
+			conn = DBConnection.getConnection();
+			if((_name!=null && _name.length()!=0)) {
+				sql+=" where user_name = ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, _name);
+			}else {
+				pstmt = conn.prepareStatement(sql);
+			}
+			
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				String userId = rs.getString("user_id");
+				String userPw = rs.getString("user_pw");
+				String userName = rs.getString("user_name");
+				String userEmail = rs.getString("user_email");
+				Timestamp userReg = rs.getTimestamp("user_reg");
+				
+				UserVO vo = new UserVO();
+				vo.setId(userId);
+				vo.setPw(userPw);
+				vo.setName(userName);
+				vo.setEmail(userEmail);
+				vo.setRegDate(userReg);
+				
+				userList.add(vo);
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(conn!=null) conn.close();
+				if(pstmt!=null) pstmt.close();
+				if(rs!=null) rs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return userList;
 	}
 }

@@ -19,6 +19,7 @@
 				<option>액션</option>
 				<option>SF</option>
 				<option>역사</option>
+				<option>고전</option>
 			</select>  <br>
 	<button type="submit">추가</button>
 </form>

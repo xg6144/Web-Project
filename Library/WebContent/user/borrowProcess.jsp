@@ -28,6 +28,12 @@
 		location.href="../main.jsp";
 	</script>
 <% 
+	session.removeAttribute("bookName");
+	session.removeAttribute("bookWriter");
+	session.removeAttribute("bookPub");
+	session.removeAttribute("bookName");
+	session.removeAttribute("bookGe");
+	session.removeAttribute("rentDate");
 	}else if(result == RentDAO.INSERT_FAIL){
 %>
 	<script type ="text/javascript">
@@ -35,6 +41,12 @@
 		location.href="./borrow.jsp";
 	</script>
 <%
+	session.removeAttribute("bookName");
+	session.removeAttribute("bookWriter");
+	session.removeAttribute("bookPub");
+	session.removeAttribute("bookName");
+	session.removeAttribute("bookGe");
+	session.removeAttribute("rentDate");
 	}
 %>
 <!DOCTYPE html>

@@ -33,6 +33,11 @@ public class BookVO {
 		return bookName;
 	}
 	
+	public BookVO()
+	{
+		
+	}
+	
 	public BookVO(String bookName, String bookWriter, String bookPub, String bookGe)
 	{	
 		this.bookName = bookName;

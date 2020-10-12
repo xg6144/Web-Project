@@ -15,8 +15,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action ="borrowProcess.jsp">
-	제목 : <input type = "text" >
+<a href="../main.jsp">뒤로가기</a>
+<form action ="borrowListSearch.jsp">
+	제목 : <input type = "text" name = "title"> 
+	<button type="submit">검색</button>
 </form>
 <h3>대여가능한 책 목록</h3> 
 	<table border = "1" cellspacing = "0">

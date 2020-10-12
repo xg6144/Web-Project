@@ -190,4 +190,58 @@ public class BookDAO {
 		
 		return vos;
 	}
+	
+	public ArrayList<BookVO> borrowListSearch(BookVO bookVO)
+	{
+		ArrayList<BookVO> listSearch = new ArrayList<BookVO>();
+		String _name = bookVO.getBookName();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from book";
+		try {
+			conn = DBConnection.getConnection();
+			if((_name != null && _name.length()!=0)) {
+				sql += "where book_name = ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, _name);
+			}else {
+				pstmt = conn.prepareStatement(sql);
+			}
+			
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				String bookId = rs.getString("book_id");
+				String bookName = rs.getString("book_name");
+				String bookWriter = rs.getString("book_writer");
+				String bookPub = rs.getString("book_pub");
+				String bookGe = rs.getString("book_ge");
+				
+				BookVO vo = new BookVO();
+				vo.setBookId(bookId);
+				vo.setBookName(bookName);
+				vo.setBookWriter(bookWriter);
+				vo.setBookPub(bookPub);
+				vo.setBookGe(bookGe);
+				
+				listSearch.add(vo);
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn!=null) conn.close();
+				if(pstmt!=null) pstmt.close();
+				if(rs!=null) rs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return listSearch;
+	}
 }
