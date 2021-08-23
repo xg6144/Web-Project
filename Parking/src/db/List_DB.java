@@ -9,6 +9,7 @@ public class List_DB {
         parking_area.add(park1);
         parking_area.add(park2);
         parking_area.add(park3);
+        parking_area.add(park4);
     }
 
     public static List_DB getInstance(){

@@ -7,6 +7,8 @@ import java.util.Stack;
 import db.List_DB;
 
 public class Parking_Process {
+    private static final int ALREADY_CAR = 1;
+    private static final int NO_CAR = 0;
     List_DB list_DB;
     private int state;
     String car_num;
@@ -43,24 +45,41 @@ public class Parking_Process {
         car_num = scanner.nextLine();
         return car_num;
     }
-    
+
+    private int check_car_num(String car_num, Stack<String> park){
+
+        for(int i=0; i < park.size(); i++){
+            if(park.get(i).equals(car_num)){
+                return ALREADY_CAR;
+            }
+        }
+        return NO_CAR;
+    }
+
     private void input_car(){
         car_num = return_car_num();
 
-        if(List_DB.getInstance().park1.size() < 4){
-            List_DB.getInstance().park1.push(car_num);
-            System.out.println("1 Success");
-        }else if(List_DB.getInstance().park2.size() < 4){
-            List_DB.getInstance().park2.push(car_num);
-            System.out.println("2 Success");
-        }else if(List_DB.getInstance().park3.size() < 4){
-            List_DB.getInstance().park3.push(car_num);
-            System.out.println("3 Success");
-        }else if(List_DB.getInstance().park4.size() < 4){
-            List_DB.getInstance().park4.push(car_num);
-            System.out.println("4 Success");
+        if(check_car_num(car_num, List_DB.getInstance().park1) == NO_CAR
+                && check_car_num(car_num, List_DB.getInstance().park2) == NO_CAR
+                && check_car_num(car_num, List_DB.getInstance().park3) == NO_CAR
+                && check_car_num(car_num, List_DB.getInstance().park4) == NO_CAR) {
+            if (List_DB.getInstance().park1.size() < 4) {
+                List_DB.getInstance().park1.push(car_num);
+                System.out.println("1 Success");
+            }else if (List_DB.getInstance().park2.size() < 4) {
+                List_DB.getInstance().park2.push(car_num);
+                System.out.println("2 Success");
+            }else if (List_DB.getInstance().park3.size() < 4) {
+                List_DB.getInstance().park3.push(car_num);
+                System.out.println("3 Success");
+            }else if (List_DB.getInstance().park4.size() < 4) {
+                List_DB.getInstance().park4.push(car_num);
+                System.out.println("4 Success");
+            }else {
+                System.out.println("Full");
+            }
         }else{
-            System.out.println("Full");
+            System.out.println("The number already exists.");
         }
     }
     private int return_loop(int idx, Stack<String> park){
@@ -153,9 +172,10 @@ public class Parking_Process {
 
         List_DB.getInstance().temp_array.clear();
     }
+
     private void parking_info(){
-        if(!List_DB.getInstance().parking_area.isEmpty()){
-            System.out.println(List_DB.getInstance().parking_area.toString());
+        for(int i=0; i < List_DB.getInstance().parking_area.size(); i++){
+            System.out.println(List_DB.getInstance().parking_area.get(i));
         }
     }
 }
