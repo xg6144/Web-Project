@@ -112,25 +112,10 @@ public class Parking_Process {
         boolean result = false;
         int total_size = park.size();
 
-        if(total_size == 1){
-            if(idx == 0){
+        for(int i=1; i <= total_size; i++){
+            if(idx == i-1){
                 park.remove(idx);
-                result =true;
-            }
-        }else if(total_size == 2){
-            if(idx == 1){
-                park.remove(idx);
-                result =true;
-            }
-        }else if(total_size == 3){
-            if(idx == 2){
-                park.remove(idx);
-                result =true;
-            }
-        }else {
-            if(idx == 3){
-                park.remove(idx);
-                result =true;
+                result=true;
             }
         }
         return result;
