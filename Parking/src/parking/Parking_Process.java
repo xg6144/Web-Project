@@ -75,9 +75,7 @@ public class Parking_Process {
     private int return_loop(int idx, Stack<String> park){
         int loop = 0;
 
-        if(park.size() == 0){
-            System.out.printf("Error");
-        }else if(park.size() == 1){
+        if(park.size() == 1){
             if (idx == 0){
                 loop = 1;
             }
@@ -106,16 +104,32 @@ public class Parking_Process {
                 loop = 1;
             }
         }
+        System.out.println(loop);
         return loop;
     }
     private boolean delete_rear(int idx, Stack<String> park){
         boolean result = false;
         int total_size = park.size();
 
-        for(int i=1; i <= total_size; i++){
-            if(idx == i-1){
+        if(total_size == 4){
+            if(idx == 3){
                 park.remove(idx);
-                result=true;
+                result = true;
+            }
+        }else if(total_size == 3){
+            if(idx == 2){
+                park.remove(idx);
+                result = true;
+            }
+        }else if(total_size == 2){
+            if(idx == 1){
+                park.remove(idx);
+                result = true;
+            }
+        }else{
+            if(idx == 0){
+                park.remove(idx);
+                result = true;
             }
         }
         return result;
@@ -123,14 +137,13 @@ public class Parking_Process {
     private void delete_car_process(Stack<String> park){
         //차량의 인덱스를 찾는다.
         int idx = park.indexOf(car_num);
-
+        int loop = return_loop(idx, park);
         boolean rear = delete_rear(idx, park);
         //해당하는 인덱스의 값 제거
-        //
 
-        System.out.println(idx);
+
         if(!rear) {
-            for(int i=0; i < return_loop(idx, park); i++){
+            for(int i=0; i < loop - 1; i++){
                 String temp = park.peek();
                 List_DB.getInstance().temp_array.push(temp);
                 park.pop();
