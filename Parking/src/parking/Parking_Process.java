@@ -9,9 +9,8 @@ import db.List_DB;
 public class Parking_Process {
     private static final int ALREADY_CAR = 1;
     private static final int NO_CAR = 0;
-    List_DB list_DB;
     private int state;
-    String car_num;
+    private String car_num;
 
     Scanner scanner = new Scanner(System.in);
     
@@ -19,23 +18,18 @@ public class Parking_Process {
     public void menu(){
         while(true){
             System.out.println("1 : Insert || 2 : Out || 3 : Exit || 4 : Info");
-            state = Integer.parseInt(scanner.nextLine());
-            switch(state){
-                case 1:
-                    input_car();
-                    break;
-                case 2:
-                    delete_car_option();
-                    break;
-                case 3:
-                    System.exit(0);
-                    break;
-                case 4:
-                    parking_info();
-                    break;
-                default:
-                    System.out.println("Wrong Input");
-                    break;
+            try{
+                state = Integer.parseInt(scanner.nextLine());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }finally {
+                switch (state) {
+                    case 1 -> input_car();
+                    case 2 -> delete_car_option();
+                    case 3 -> System.exit(0);
+                    case 4 -> parking_info();
+                    default -> System.out.println("Wrong Input");
+                }
             }
         }
     }
@@ -65,16 +59,12 @@ public class Parking_Process {
                 && check_car_num(car_num, List_DB.getInstance().park4) == NO_CAR) {
             if (List_DB.getInstance().park1.size() < 4) {
                 List_DB.getInstance().park1.push(car_num);
-                System.out.println("1 Success");
             }else if (List_DB.getInstance().park2.size() < 4) {
                 List_DB.getInstance().park2.push(car_num);
-                System.out.println("2 Success");
             }else if (List_DB.getInstance().park3.size() < 4) {
                 List_DB.getInstance().park3.push(car_num);
-                System.out.println("3 Success");
             }else if (List_DB.getInstance().park4.size() < 4) {
                 List_DB.getInstance().park4.push(car_num);
-                System.out.println("4 Success");
             }else {
                 System.out.println("Full");
             }
@@ -83,57 +73,87 @@ public class Parking_Process {
         }
     }
     private int return_loop(int idx, Stack<String> park){
-        int loop;
-        switch (idx) {
-            case 0:
-                if (park.size() == 1) {
-                    loop = 1;
-                } else if (park.size() == 2) {
-                    loop = 2;
-                } else if (park.size() == 3) {
-                    loop = 3;
-                } else {
-                    loop = 4;
-                }
-                break;
-            case 1:
-                if (park.size() == 2) {
-                    loop = 1;
-                } else if (park.size() == 3) {
-                    loop = 2;
-                } else {
-                    loop = 3;
-                }
-                break;
-            case 2:
-                if (park.size() == 3) {
-                    loop = 1;
-                } else {
-                    loop = 2;
-                }
-                break;
-            default:
+        int loop = 0;
+
+        if(park.size() == 0){
+            System.out.printf("Error");
+        }else if(park.size() == 1){
+            if (idx == 0){
                 loop = 1;
-                break;
+            }
+        }else if(park.size() == 2){
+            if(idx == 0){
+                loop = 2;
+            }else {
+                loop = 1;
+            }
+        }else if(park.size() == 3){
+            if(idx == 0){
+                loop = 3;
+            }else if(idx == 1){
+                loop = 2;
+            }else{
+                loop = 1;
+            }
+        }else{
+            if(idx == 0){
+                loop = 4;
+            }else if(idx == 1){
+                loop = 3;
+            }else if(idx == 2){
+                loop = 2;
+            }else{
+                loop = 1;
+            }
         }
         return loop;
     }
-    private void delete_car_process(Stack<String> park){
-            //차량의 인덱스를 찾는다.
-            int idx = park.indexOf(car_num);
+    private boolean delete_rear(int idx, Stack<String> park){
+        boolean result = false;
+        int total_size = park.size();
 
+        if(total_size == 1){
+            if(idx == 0){
+                park.remove(idx);
+                result =true;
+            }
+        }else if(total_size == 2){
+            if(idx == 1){
+                park.remove(idx);
+                result =true;
+            }
+        }else if(total_size == 3){
+            if(idx == 2){
+                park.remove(idx);
+                result =true;
+            }
+        }else {
+            if(idx == 3){
+                park.remove(idx);
+                result =true;
+            }
+        }
+        return result;
+    }
+    private void delete_car_process(Stack<String> park){
+        //차량의 인덱스를 찾는다.
+        int idx = park.indexOf(car_num);
+
+        boolean rear = delete_rear(idx, park);
+        //해당하는 인덱스의 값 제거
+        //
+
+        System.out.println(idx);
+        if(!rear) {
             for(int i=0; i < return_loop(idx, park); i++){
                 String temp = park.peek();
-                List_DB.getInstance().temp_array.add(temp);
-
+                List_DB.getInstance().temp_array.push(temp);
                 park.pop();
             }
-
-            //해당하는 인덱스의 값 제거
             park.remove(idx);
-
             //임시 저장된 값 다시 삽입
             return_temp(park);
+        }
     }
     private void delete_car_option(){
         try{

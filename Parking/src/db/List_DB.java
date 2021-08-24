@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class List_DB {
-    private static List_DB instance = new List_DB();
+    private static final List_DB instance = new List_DB();
     private List_DB(){
         parking_area.add(park1);
         parking_area.add(park2);
@@ -23,5 +23,6 @@ public class List_DB {
 
     public Stack<Stack<String>> parking_area = new Stack<>();
 
-    public ArrayList<String> temp_array = new ArrayList<>();
+    //public ArrayList<String> temp_array = new ArrayList<>();
+    public Stack<String> temp_array = new Stack<>();
 }
